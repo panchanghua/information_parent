@@ -1,0 +1,32 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/panchanghua/config-repostory.git
+#注册到eureka的服务地址
+eureka:
+  instance:
+    prefer-ip-address: true  #使用IP地址进行注册
+    hostname: localhost
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心注册服务id
+  #    lease-renewal-interval-in-seconds: 5 #向服务器发送心跳的时间
+  #    lease-expiration-duration-in-seconds: 10 #续约到期时间
+  client:
+    service-url: #配置eureka server的服务地址
+      # defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://localhost:9000/eureka/ #,http://localhost:9001/eureka/ #注册到eureka集群中
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
