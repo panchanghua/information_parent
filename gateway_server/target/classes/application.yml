@@ -1,0 +1,124 @@
+server:
+  port: 9001
+#指定服务名
+spring:
+  application:
+    name: gateway-server
+  #redis配置 gateway限流使用
+  redis:
+    host: localhost
+    pool: 6379
+    database: 0
+  main:
+    allow-bean-definition-overriding: true #允许我们自己覆盖spring放入IOC容器中对象 自己写的对象可能会和自动载入对象重复 导致报错
+  cloud:
+    # 网关配置
+    gateway:
+      # 跨域设置  貌似没用
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+      routes:
+        #配置路由：路由id 路由到微服务的URL 断言（判断条件）
+        - id: user-account-authentcation
+          #uri: http://127.0.0.1:6869
+          #lb：// 根据服务名从注册中心拉取服务请求路径
+          uri: lb://user-account-authentcation
+          predicates:
+          #- Path=/get # 匹配/get请求转发接到URL后
+          - Path=/oauth/**
+        - id: meeting-service
+          uri: lb://meeting-service
+          predicates:
+            - Path=/meeting/**
+        - id: menu-service
+          uri: lb://menu-service
+          predicates:
+            - Path=/menu/**
+        - id: news-service
+          uri: lb://news-service
+          predicates:
+            - Path=/news/**
+        - id: periodical-service
+          uri: lb://periodical-service
+          predicates:
+            - Path=/periodical/**
+#          filters: #http://127.0.0.1:6869/uaa/get -> http://127.0.0.1:6869/get
+#          - RewritePath=/uaa/(?<segment>.*), /$\{segment} # 路径重写的过滤器 将所有get请求发到user_account_authentcation服务上
+          # 使用限流过滤器 RequestRateLimiterGatewayFilterFactory 过滤器源码都是添加GatewayFilterFactory做后缀的
+#          - name: RequestRateLimiter
+#            args:
+#              # 使用SpEl从容器中获取 限流规则 对象
+#              key-esolver: '#{@userKeyResolver}'
+#              # 令牌桶每秒填充平均速率
+#              redis-rate-limiter.replenishRate: 1
+#              # 令牌桶的上限
+#              redis-rate-limiter.burstCapacity: 3
+      discovery:
+        locator:
+          enabled: true #开启根据服务名称自动转发
+          lower-case-service-id: true #开启服务名称小写呈现
+#注册到eureka的服务地址
+eureka:
+  instance:
+    prefer-ip-address: true  #使用IP地址进行注册
+    hostname: localhost
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心注册服务id
+#    lease-renewal-interval-in-seconds: 5 #向服务器发送心跳的时间
+#    lease-expiration-duration-in-seconds: 10 #续约到期时间
+  client:
+    service-url: #配置eureka server的服务地址
+      # defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://localhost:9000/eureka/ #,http://localhost:9001/eureka/ #注册到eureka集群中
+    #consul配置
+#    consul:
+#      host: 127.0.0.1 #consul服务器的ip地址
+#      port: 8500 #consul服务器的端口
+#      discovery:
+#        #是否需要注册 consul 服务器
+#        register: true
+#        #注册的实例id 唯一标识
+#        instance-id: ${spring.application.name}-${server.port}
+#        #服务的名称
+#        service-name: ${spring.application.name}
+#        #服务的请求端口
+#        port: ${server.port}
+#        #指定开启IP地址注册
+#        prefer-ip-address: true
+#        #当前服务的请求ip
+#        ip-address: ${spring.cloud.client.ip-address}
+  # 修改zipkin使用rabbitmq采集数据
+  zipkin:
+    #base-url: http://127.0.0.1:9411/ # server的请求地址
+    sender:
+      type: rabbit
+      #type: web # 数据传输方式 已HTTP的形式向server端发送数据
+  sleuth:
+    sampler:
+      probability: 1 # 采样比 默认0.1
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    #重试策略
+    listener:
+      direct:
+        retry:
+          enabled: true
+      simple:
+        retry:
+          enabled: true
+logging:
+  level:
+    root: info
+    org.springframework.web.servlet.DispathcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
+

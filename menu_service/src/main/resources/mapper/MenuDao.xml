@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pch.menu.dao.MenuDao">
+
+    <resultMap type="com.pch.menu.entity.Menu" id="MenuMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="menuUrl" column="menu_url" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MenuMap">
+        select
+          id, parent_id, menu_name, menu_url, status
+        from security.menu
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MenuMap">
+        select
+          id, parent_id, menu_name, menu_url, status
+        from security.menu
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MenuMap">
+        select
+          id, parent_id, menu_name, menu_url, status
+        from security.menu
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu_name = #{menuName}
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+                and menu_url = #{menuUrl}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+<!--通过父id查询-->
+    <select id="queryByParentId" resultMap="MenuMap">
+        select
+          id, parent_id, menu_name, menu_url, status
+        from security.menu
+        where parent_id = #{id}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into security.menu(parent_id, menu_name, menu_url, status)
+        values (#{parentId}, #{menuName}, #{menuUrl}, #{status})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update security.menu
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName},
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+                menu_url = #{menuUrl},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from security.menu where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisCodeHelperDatasource">
+    <option name="projectProfile">
+      <ProjectProfile>
+        <option name="javaMapperPackage" value="com.pch.user.dao" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/user_service/src/main/java" />
+        <option name="javaModelPackage" value="com.pch.user.entity" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/user_service/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="user_service" />
+        <option name="moduleNameToPackageAndPathMap">
+          <map>
+            <entry key="eureka_server">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.pch.meeting.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/eureka_server/src/main/java" />
+                  <option name="javaModelPacakge" value="com.pch.meeting.domain" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/eureka_server/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/eureka_server/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/eureka_server/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/eureka_server/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+            <entry key="meeting_service">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.pch.meeting.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/meeting_service/src/main/java" />
+                  <option name="javaModelPacakge" value="com.pch.meeting.domain" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/meeting_service/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/meeting_service/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/meeting_service/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/meeting_service/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+            <entry key="menu_service">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.pch.menu.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/menu_service/src/main/java" />
+                  <option name="javaModelPacakge" value="com.pch.menu.domain" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/menu_service/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/menu_service/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/menu_service/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/menu_service/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+            <entry key="user_service">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.pch.user.dao" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/user_service/src/main/java" />
+                  <option name="javaModelPacakge" value="com.pch.user.entity" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/user_service/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/user_service/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/user_service/src/main/java" />
+                  <option name="xmlPackage" value="mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/user_service/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="tableGenerateConfigs">
+          <map>
+            <entry key="intelligent_agricultural:meeting_info">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="MeetingInfo" />
+                  <option name="moduleName" value="meeting_service" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="security:menu">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="Menu" />
+                  <option name="moduleName" value="menu_service" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="security:t_permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="javaModelName" value="TPermission" />
+                  <option name="moduleName" value="user_service" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="security:t_role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="javaModelName" value="TRole" />
+                  <option name="moduleName" value="user_service" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="security:t_role_permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="javaModelName" value="TRolePermission" />
+                  <option name="moduleName" value="user_service" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="security:t_user_role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="javaModelName" value="TUserRole" />
+                  <option name="moduleName" value="user_service" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="xmlMapperPackage" value="mapper" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/user_service/src/main/resources" />
+      </ProjectProfile>
+    </option>
+  </component>
+</project>

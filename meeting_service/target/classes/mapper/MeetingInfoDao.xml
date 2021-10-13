@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pch.meeting.dao.MeetingInfoDao">
+
+    <resultMap type="com.pch.meeting.entity.MeetingInfo" id="MeetingInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="meetingName" column="meeting_name" jdbcType="VARCHAR"/>
+        <result property="conferenceid" column="conferenceID" jdbcType="VARCHAR"/>
+        <result property="included" column="included" jdbcType="VARCHAR"/>
+        <result property="place" column="place" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="contribute" column="contribute" jdbcType="VARCHAR"/>
+        <result property="register" column="register" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MeetingInfoMap">
+        select
+          id, logo, meeting_name, conferenceID, included, place, start_time, contribute, register
+        from intelligent_agricultural.meeting_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MeetingInfoMap">
+        select
+          id, logo, meeting_name, conferenceID, included, place, start_time, contribute, register
+        from intelligent_agricultural.meeting_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MeetingInfoMap">
+        select
+          id, logo, meeting_name, conferenceID, included, place, start_time, contribute, register
+        from intelligent_agricultural.meeting_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="logo != null and logo != ''">
+                and logo = #{logo}
+            </if>
+            <if test="meetingName != null and meetingName != ''">
+                and meeting_name = #{meetingName}
+            </if>
+            <if test="conferenceid != null and conferenceid != ''">
+                and conferenceID = #{conferenceid}
+            </if>
+            <if test="included != null and included != ''">
+                and included = #{included}
+            </if>
+            <if test="place != null and place != ''">
+                and place = #{place}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and start_time = #{startTime}
+            </if>
+            <if test="contribute != null and contribute != ''">
+                and contribute = #{contribute}
+            </if>
+            <if test="register != null and register != ''">
+                and register = #{register}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into intelligent_agricultural.meeting_info(logo, meeting_name, included, place, start_time, contribute, register)
+        values (#{logo}, #{meetingName}, #{included}, #{place}, #{startTime}, #{contribute}, #{register})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update intelligent_agricultural.meeting_info
+        <set>
+            <if test="logo != null and logo != ''">
+                logo = #{logo},
+            </if>
+            <if test="meetingName != null and meetingName != ''">
+                meeting_name = #{meetingName},
+            </if>
+            <if test="included != null and included != ''">
+                included = #{included},
+            </if>
+            <if test="place != null and place != ''">
+                place = #{place},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                start_time = #{startTime},
+            </if>
+            <if test="contribute != null and contribute != ''">
+                contribute = #{contribute},
+            </if>
+            <if test="register != null and register != ''">
+                register = #{register},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from intelligent_agricultural.meeting_info where id = #{id}
+    </delete>
+
+</mapper>

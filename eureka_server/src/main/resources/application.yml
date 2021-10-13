@@ -1,0 +1,17 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    hostname: localhost #向注册中心注册的主机名
+  client:
+    register-with-eureka: false #是否将自己注册到注册中心 默认为true。由于当前应用就是EurekaServer，所以置为false
+    fetch-registry: false #是否从eureka中获取注册信息
+    service-url: #配置暴露给eureka client的请求地址 设置Eureka的地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://${eureka.instance.hostname}:9000/eureka/
+  server:
+    enable-self-preservation: false #关闭自我保护机制 超过一定量的服务没有发送心跳 将会把剔除服务关闭
+    eviction-interval-timer-in-ms: 5000 #剔除服务间隔 没有发送心跳的服务将会被剔除

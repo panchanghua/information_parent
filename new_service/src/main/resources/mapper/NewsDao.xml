@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pch.news.dao.NewsDao">
+
+    <resultMap type="com.pch.news.entity.News" id="NewsMap">
+        <result property="newId" column="new_id" jdbcType="VARCHAR"/>
+        <result property="newName" column="new_name" jdbcType="VARCHAR"/>
+        <result property="newDate" column="new_date" jdbcType="VARCHAR"/>
+        <result property="newData" column="new_data" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.pch.news.entity.News" id="NewsInfoMap">
+        <result property="newId" column="new_id" jdbcType="VARCHAR"/>
+        <result property="newName" column="new_name" jdbcType="VARCHAR"/>
+        <result property="newDate" column="new_date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NewsMap">
+        select
+          new_id, new_name, new_date, new_data
+        from intelligent_agricultural.news
+        where new_id = #{newId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="NewsMap">
+        select
+          new_id, new_name, new_date, new_data
+        from intelligent_agricultural.news
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryInfoByLimit" resultMap="NewsInfoMap">
+        select
+        new_id, new_name, new_date
+        from intelligent_agricultural.news
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NewsMap">
+        select
+          new_id, new_name, new_date, new_data
+        from intelligent_agricultural.news
+        <where>
+            <if test="newId != null and newId != ''">
+                and new_id = #{newId}
+            </if>
+            <if test="newName != null and newName != ''">
+                and new_name = #{newName}
+            </if>
+            <if test="newDate != null and newDate != ''">
+                and new_date = #{newDate}
+            </if>
+            <if test="newData != null and newData != ''">
+                and new_data = #{newData}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="newId" useGeneratedKeys="true">
+        insert into intelligent_agricultural.news(new_name, new_date, new_data)
+        values (#{newName}, #{newDate}, #{newData})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update intelligent_agricultural.news
+        <set>
+            <if test="newName != null and newName != ''">
+                new_name = #{newName},
+            </if>
+            <if test="newDate != null and newDate != ''">
+                new_date = #{newDate},
+            </if>
+            <if test="newData != null and newData != ''">
+                new_data = #{newData},
+            </if>
+        </set>
+        where new_id = #{newId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from intelligent_agricultural.news where new_id = #{newId}
+    </delete>
+
+</mapper>

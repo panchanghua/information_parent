@@ -1,0 +1,24 @@
+server:
+  port: 9007
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://192.168.1.103:3306/security?useSSL=false&characterEncoding=UTF-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+##注册到eureka的服务地址
+#eureka:
+#  instance:
+#    prefer-ip-address: true  #使用IP地址进行注册
+#    hostname: localhost
+#    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心注册服务id
+#  #    lease-renewal-interval-in-seconds: 5 #向服务器发送心跳的时间
+#  #    lease-expiration-duration-in-seconds: 10 #续约到期时间
+#  client:
+#    service-url: #配置eureka server的服务地址
+#      defaultZone: http://localhost:9000/eureka/ #,http://localhost:9001/eureka/ #注册到eureka集群中

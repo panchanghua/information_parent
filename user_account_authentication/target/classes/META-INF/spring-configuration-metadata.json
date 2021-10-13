@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "ignored",
+      "type": "com.pch.security.constant.IgnoredUrlsProperties",
+      "sourceType": "com.pch.security.constant.IgnoredUrlsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ignored.urls",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.pch.security.constant.IgnoredUrlsProperties"
+    }
+  ],
+  "hints": []
+}

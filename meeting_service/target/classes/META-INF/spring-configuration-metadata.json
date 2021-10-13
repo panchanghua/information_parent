@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "ignored",
+      "type": "com.pch.meeting.constant.IgnoredUrlsProperties",
+      "sourceType": "com.pch.meeting.constant.IgnoredUrlsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ignored.urls",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.pch.meeting.constant.IgnoredUrlsProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pch.periodical.dao.JournalDao">
+
+    <resultMap type="com.pch.periodical.entity.Journal" id="JournalMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="journalId" column="journal_id" jdbcType="VARCHAR"/>
+        <result property="journalPicture" column="journal_picture" jdbcType="VARCHAR"/>
+        <result property="journalName" column="journal_name" jdbcType="VARCHAR"/>
+        <result property="journalCreateTime" column="journal_create_time" jdbcType="VARCHAR"/>
+        <result property="journalEditor" column="journal_editor" jdbcType="VARCHAR"/>
+        <result property="journalTelephone" column="journal_telephone" jdbcType="VARCHAR"/>
+        <result property="journalEmail" column="journal_email" jdbcType="VARCHAR"/>
+        <result property="journalWebsite" column="journal_website" jdbcType="VARCHAR"/>
+        <result property="journalSponsor" column="journal_sponsor" jdbcType="VARCHAR"/>
+        <result property="journalAdminister" column="journal_administer" jdbcType="VARCHAR"/>
+        <result property="journalSubscribe" column="journal_subscribe" jdbcType="VARCHAR"/>
+        <result property="journalIntroduction" column="journal_introduction" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="JournalMap">
+        select
+          id, journal_id, journal_picture, journal_name, journal_create_time, journal_editor, journal_telephone, journal_email, journal_website, journal_sponsor, journal_administer, journal_subscribe, journal_introduction
+        from intelligent_agricultural.journal
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="JournalMap">
+        select
+          id, journal_id, journal_picture, journal_name, journal_create_time, journal_editor, journal_telephone, journal_email, journal_website, journal_sponsor, journal_administer, journal_subscribe, journal_introduction
+        from intelligent_agricultural.journal
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryInfoByLimit" resultMap="JournalMap">
+        select
+        id, journal_id, journal_picture, journal_name
+        from intelligent_agricultural.journal
+        <where>
+            <if test="name != ''">
+                journal_name like '%${name}%'
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countByName" resultType="java.lang.Integer">
+        select count(id)
+        from intelligent_agricultural.journal
+        <where>
+            <if test="name != ''">
+                journal_name like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByOptions" resultMap="JournalMap">
+        select
+        id, journal_id, journal_picture, journal_name
+        from intelligent_agricultural.journal
+        <where>
+            <if test="search.name != null and search.name != ''">
+                and journal_name like '%${search.name}%'
+            </if>
+            <if test="search.editor != null and search.editor != ''">
+                and journal_editor like '%${search.editor}%'
+            </if>
+            <if test="search.time != null and search.time != ''">
+                and journal_create_time like '%${search.time}%'
+            </if>
+            <if test="search.sponsor != null and search.sponsor != ''">
+                and journal_sponsor like '%${search.sponsor}%'
+            </if>
+            <if test="search.administer != null and search.administer != ''">
+                and journal_administer like '%${search.administer}%'
+            </if>
+            <if test="search.subscribe == true ">
+                and journal_subscribe != ''
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="JournalMap">
+        select
+          id, journal_id, journal_picture, journal_name, journal_create_time, journal_editor, journal_telephone, journal_email, journal_website, journal_sponsor, journal_administer, journal_subscribe, journal_introduction
+        from intelligent_agricultural.journal
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="journalId != null and journalId != ''">
+                and journal_id = #{journalId}
+            </if>
+            <if test="journalPicture != null and journalPicture != ''">
+                and journal_picture = #{journalPicture}
+            </if>
+            <if test="journalName != null and journalName != ''">
+                and journal_name = #{journalName}
+            </if>
+            <if test="journalCreateTime != null and journalCreateTime != ''">
+                and journal_create_time = #{journalCreateTime}
+            </if>
+            <if test="journalEditor != null and journalEditor != ''">
+                and journal_editor = #{journalEditor}
+            </if>
+            <if test="journalTelephone != null and journalTelephone != ''">
+                and journal_telephone = #{journalTelephone}
+            </if>
+            <if test="journalEmail != null and journalEmail != ''">
+                and journal_email = #{journalEmail}
+            </if>
+            <if test="journalWebsite != null and journalWebsite != ''">
+                and journal_website = #{journalWebsite}
+            </if>
+            <if test="journalSponsor != null and journalSponsor != ''">
+                and journal_sponsor = #{journalSponsor}
+            </if>
+            <if test="journalAdminister != null and journalAdminister != ''">
+                and journal_administer = #{journalAdminister}
+            </if>
+            <if test="journalSubscribe != null and journalSubscribe != ''">
+                and journal_subscribe = #{journalSubscribe}
+            </if>
+            <if test="journalIntroduction != null and journalIntroduction != ''">
+                and journal_introduction = #{journalIntroduction}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into intelligent_agricultural.journal(journal_id, journal_picture, journal_name, journal_create_time, journal_editor, journal_telephone, journal_email, journal_website, journal_sponsor, journal_administer, journal_subscribe, journal_introduction)
+        values (#{journalId}, #{journalPicture}, #{journalName}, #{journalCreateTime}, #{journalEditor}, #{journalTelephone}, #{journalEmail}, #{journalWebsite}, #{journalSponsor}, #{journalAdminister}, #{journalSubscribe}, #{journalIntroduction})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update intelligent_agricultural.journal
+        <set>
+            <if test="journalId != null and journalId != ''">
+                journal_id = #{journalId},
+            </if>
+            <if test="journalPicture != null and journalPicture != ''">
+                journal_picture = #{journalPicture},
+            </if>
+            <if test="journalName != null and journalName != ''">
+                journal_name = #{journalName},
+            </if>
+            <if test="journalCreateTime != null and journalCreateTime != ''">
+                journal_create_time = #{journalCreateTime},
+            </if>
+            <if test="journalEditor != null and journalEditor != ''">
+                journal_editor = #{journalEditor},
+            </if>
+            <if test="journalTelephone != null and journalTelephone != ''">
+                journal_telephone = #{journalTelephone},
+            </if>
+            <if test="journalEmail != null and journalEmail != ''">
+                journal_email = #{journalEmail},
+            </if>
+            <if test="journalWebsite != null and journalWebsite != ''">
+                journal_website = #{journalWebsite},
+            </if>
+            <if test="journalSponsor != null and journalSponsor != ''">
+                journal_sponsor = #{journalSponsor},
+            </if>
+            <if test="journalAdminister != null and journalAdminister != ''">
+                journal_administer = #{journalAdminister},
+            </if>
+            <if test="journalSubscribe != null and journalSubscribe != ''">
+                journal_subscribe = #{journalSubscribe},
+            </if>
+            <if test="journalIntroduction != null and journalIntroduction != ''">
+                journal_introduction = #{journalIntroduction},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from intelligent_agricultural.journal where id = #{id}
+    </delete>
+
+
+
+</mapper>

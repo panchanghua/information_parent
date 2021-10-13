@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pch.meeting.dao.ConferenceInfoDao">
+
+    <resultMap type="com.pch.meeting.entity.ConferenceInfo" id="ConferenceInfoMap">
+        <result property="conferenceid" column="conferenceID" jdbcType="VARCHAR"/>
+        <result property="conferenceTitle" column="conference_title" jdbcType="VARCHAR"/>
+        <result property="conferenceSubtitle" column="conference_subtitle" jdbcType="VARCHAR"/>
+        <result property="conferenceInfo" column="conference_info" jdbcType="VARCHAR"/>
+        <result property="conferenceImportdate" column="conference_importdate" jdbcType="VARCHAR"/>
+        <result property="conferencePaper" column="conference_paper" jdbcType="VARCHAR"/>
+        <result property="conferenceContact" column="conference_contact" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ConferenceInfoMap">
+        select
+          conferenceID, conference_title, conference_subtitle, conference_info, conference_importdate, conference_paper, conference_contact
+        from intelligent_agricultural.conference_info
+        where conferenceID = #{conferenceid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ConferenceInfoMap">
+        select
+          conferenceID, conference_title, conference_subtitle, conference_info, conference_importdate, conference_paper, conference_contact
+        from intelligent_agricultural.conference_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ConferenceInfoMap">
+        select
+          conferenceID, conference_title, conference_subtitle, conference_info, conference_importdate, conference_paper, conference_contact
+        from intelligent_agricultural.conference_info
+        <where>
+            <if test="conferenceid != null and conferenceid != ''">
+                and conferenceID = #{conferenceid}
+            </if>
+            <if test="conferenceTitle != null and conferenceTitle != ''">
+                and conference_title = #{conferenceTitle}
+            </if>
+            <if test="conferenceSubtitle != null and conferenceSubtitle != ''">
+                and conference_subtitle = #{conferenceSubtitle}
+            </if>
+            <if test="conferenceInfo != null and conferenceInfo != ''">
+                and conference_info = #{conferenceInfo}
+            </if>
+            <if test="conferenceImportdate != null and conferenceImportdate != ''">
+                and conference_importdate = #{conferenceImportdate}
+            </if>
+            <if test="conferencePaper != null and conferencePaper != ''">
+                and conference_paper = #{conferencePaper}
+            </if>
+            <if test="conferenceContact != null and conferenceContact != ''">
+                and conference_contact = #{conferenceContact}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="conferenceid" useGeneratedKeys="true">
+        insert into intelligent_agricultural.conference_info(conference_title, conference_subtitle, conference_info, conference_importdate, conference_paper, conference_contact)
+        values (#{conferenceTitle}, #{conferenceSubtitle}, #{conferenceInfo}, #{conferenceImportdate}, #{conferencePaper}, #{conferenceContact})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update intelligent_agricultural.conference_info
+        <set>
+            <if test="conferenceTitle != null and conferenceTitle != ''">
+                conference_title = #{conferenceTitle},
+            </if>
+            <if test="conferenceSubtitle != null and conferenceSubtitle != ''">
+                conference_subtitle = #{conferenceSubtitle},
+            </if>
+            <if test="conferenceInfo != null and conferenceInfo != ''">
+                conference_info = #{conferenceInfo},
+            </if>
+            <if test="conferenceImportdate != null and conferenceImportdate != ''">
+                conference_importdate = #{conferenceImportdate},
+            </if>
+            <if test="conferencePaper != null and conferencePaper != ''">
+                conference_paper = #{conferencePaper},
+            </if>
+            <if test="conferenceContact != null and conferenceContact != ''">
+                conference_contact = #{conferenceContact},
+            </if>
+        </set>
+        where conferenceID = #{conferenceid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from intelligent_agricultural.conference_info where conferenceID = #{conferenceid}
+    </delete>
+
+</mapper>
